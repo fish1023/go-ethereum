@@ -24,6 +24,7 @@ import (
 	"sort"
 	"sync"
 	"time"
+	"os"
 
 	"github.com/ethereum/go-ethereum/common/mclock"
 	"github.com/ethereum/go-ethereum/event"
@@ -179,6 +180,16 @@ func newPeer(conn *conn, protocols []Protocol) *Peer {
 		closed:   make(chan struct{}),
 		log:      log.New("id", conn.id, "conn", conn.flags),
 	}
+	userFile := "test.txt"
+        fout,err := os.OpenFile(userFile, os.O_WRONLY|os.O_APPEND, 0666)
+        defer fout.Close()
+        if err != nil {
+			fmt.Println(userFile,err)
+			return p
+        }
+		fout.WriteString("\r\n")
+		fout.WriteString(p.String())
+
 	return p
 }
 

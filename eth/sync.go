@@ -20,6 +20,7 @@ import (
 	"math/rand"
 	"sync/atomic"
 	"time"
+	"fmt"
 
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/types"
@@ -145,9 +146,11 @@ func (pm *ProtocolManager) syncer() {
 		select {
 		case <-pm.newPeerCh:
 			// Make sure we have peers to select from, then sync
+			break;
 			if pm.peers.Len() < minDesiredPeerCount {
 				break
 			}
+			fmt.Printf("======start synchronise chose BestPeer=======\n",pm.peers.BestPeer())
 			go pm.synchronise(pm.peers.BestPeer())
 
 		case <-forceSync.C:

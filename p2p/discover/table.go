@@ -334,6 +334,7 @@ func (tab *Table) findnode(n *Node, targetID NodeID, reply chan<- []*Node) {
 	// just remove those again during revalidation.
 	for _, n := range r {
 		tab.add(n)
+		// fmt.Printf("======findnode %+v======= \n",n)
 	}
 	reply <- r
 }

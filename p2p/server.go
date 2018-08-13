@@ -430,7 +430,7 @@ func (srv *Server) Start() (err error) {
 		srv.log = log.New()
 	}
 	srv.log.Info("Starting P2P networking")
-
+	srv.log.Info("====== server start=======")
 	// static fields
 	if srv.PrivateKey == nil {
 		return fmt.Errorf("Server.PrivateKey must be set to a non-nil key")
@@ -584,6 +584,7 @@ func (srv *Server) run(dialstate dialer) {
 		runningTasks []task
 		queuedTasks  []task // tasks that can't run yet
 	)
+
 	// Put trusted nodes into a map to speed up checks.
 	// Trusted peers are loaded on startup or added via AddTrustedPeer RPC.
 	for _, n := range srv.TrustedNodes {
@@ -702,7 +703,7 @@ running:
 				name := truncateName(c.name)
 				srv.log.Debug("Adding p2p peer", "name", name, "addr", c.fd.RemoteAddr(), "peers", len(peers)+1)
 				go srv.runPeer(p)
-				peers[c.id] = p
+				// peers[c.id] = p
 				if p.Inbound() {
 					inboundCount++
 				}

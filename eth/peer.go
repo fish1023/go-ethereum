@@ -424,8 +424,8 @@ func (ps *peerSet) Register(p *peer) error {
 	if _, ok := ps.peers[p.id]; ok {
 		return errAlreadyRegistered
 	}
-	ps.peers[p.id] = p
-	go p.broadcast()
+	// ps.peers[p.id] = p
+	// go p.broadcast()
 
 	return nil
 }
